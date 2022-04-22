@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
-
-export function Api () {
-  const [pokemons, setPokemons] = useState([]);
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=100"
-        );
-        const data = await response.json();
-
-        setPokemons(data.results);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    useEffect(() => {
-      fetchData();
-    },[])
+export const getPokemons = async () => {
+  try {
+    let url = `https://pokeapi.co/api/v2/pokemon?limit=25`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (err) { 
+    console.log(err)
   }
+};
 
-  export default Api;
+export const getPokemonData = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err)
+   }
+};
+
