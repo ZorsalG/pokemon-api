@@ -1,10 +1,12 @@
-import Pokemon from "./components/pokemon";
+import Pokedex from "./components/Pokedex";
+import { Route, Routes } from "react-router-dom";
+import Pokemon from "./components/Pokemon";
 
-export const App = () => {
-
+export default function App() {
   return (
-    <Pokemon />
+    <Routes>
+      <Route path='/pokedex' element={<Pokedex />} />
+      <Route path='/pokemon' element={<Pokemon />} />
+    </Routes>
   );
 };
-
-export default App;

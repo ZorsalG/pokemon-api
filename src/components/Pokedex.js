@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPokemons, getPokemonData } from "../services/api";
+import { getPokemons, getPokemonData } from "../services/Api";
 import { useEffect } from "react";
 import {
   Table,
@@ -24,9 +24,9 @@ export const Pokemon = () => {
       console.log(err)
     }
   };
-
   useEffect(() => {
     fetchPokemons();
+
   }
   )
 
@@ -38,7 +38,7 @@ export const Pokemon = () => {
             <Tr key={pokemon.name}>
               {/* EXTRAR EN CONCRETO {} DESTRUCTURING */}
               <Td>{pokemon.name}</Td>
-              <Td><Button colorScheme='blue'>Ver más detalles</Button></Td>
+              <Td><Button colorScheme='blue' size='sm' >Ver más detalles</Button></Td>
             </Tr>
           ))}
         </Tbody>
