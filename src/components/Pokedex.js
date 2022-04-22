@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getPokemons, getPokemonData } from "../services/Api";
-import { useEffect } from "react";
 import {
   Table,
   Tbody,
   Tr,
   Td,
-  TableContainer, Button
-} from '@chakra-ui/react'
+  TableContainer, Link
+} from '@chakra-ui/react';
 
-export const Pokemon = () => {
+
+export const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
 
   const fetchPokemons = async () => {
@@ -36,9 +36,9 @@ export const Pokemon = () => {
         <Tbody>
           {pokemons.map((pokemon) => (
             <Tr key={pokemon.name}>
-              {/* EXTRAR EN CONCRETO {} DESTRUCTURING */}
+              {/* EXTRAR EN CONCRETO dentro del key {{pokemon}} {} DESTRUCTURING */}
               <Td>{pokemon.name}</Td>
-              <Td><Button colorScheme='blue' size='sm' >Ver más detalles</Button></Td>
+              <Td><Link to={`/pokemon/${pokemon.name}`}>Ver más</Link></Td>
             </Tr>
           ))}
         </Tbody>
@@ -47,4 +47,4 @@ export const Pokemon = () => {
   )
 }
 
-export default Pokemon;
+export default Pokedex;

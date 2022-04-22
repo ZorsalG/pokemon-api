@@ -12,6 +12,7 @@ import {
 export const Pokemon = () => {
   const [pokemons, setPokemons] = useState([]);
 
+
   const fetchPokemons = async () => {
     try {
       const data = await getPokemons();
