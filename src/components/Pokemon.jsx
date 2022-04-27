@@ -1,5 +1,5 @@
-import { Table, TableContainer, Tbody, Tr, Td, Thead, Th } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { Table, TableContainer, Tbody, Tr, Td, Thead, Th, Button } from "@chakra-ui/react";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export const Pokemon = () => {
@@ -21,31 +21,35 @@ export const Pokemon = () => {
   useEffect(() => {
     fetchPokemon();
   }, [])
-  
+
   console.log(pokemon)
   return (
     <TableContainer>
       <Table size='sm' colorScheme='black'>
         <Thead>
           <Tr>
-            <Th>Name</Th>
+            <Th>Nombre</Th>
             {pokemon?.stats?.map(stat => (
               <Th key={stat.stat.name}>{stat.stat.name}</Th>
             ))}
             <Th>Height</Th>
             <Th>Base Experience</Th>
+            <Th>Back</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
             <Td>{pokemon.name}</Td>
-            {pokemon?.stats?.map(stat => (
+            {pokemon.stats?.map(stat => (
               <Th key={stat.stat.name}>{stat.base_stat}</Th>
             ))}
             <Td>{pokemon.height}</Td>
             <Td>{pokemon.base_experience}</Td>
-          </Tr>
-          <Tr>
+            <Td>
+              <Button size='sm' colorScheme='telegram' variant='solid'>
+                <Link to='/pokedex'>BACK</Link>
+              </Button>
+            </Td>
           </Tr>
         </Tbody>
       </Table>

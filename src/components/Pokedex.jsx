@@ -28,9 +28,9 @@ export const Pokedex = () => {
   useEffect(() => {
     fetchPokemons();
 
-  }
+  }, []
   )
-
+  console.log(pokemons)
   {/* EXTRAR EN CONCRETO dentro del key {{pokemon}} {} DESTRUCTURING */ }
 
   return (
@@ -39,21 +39,29 @@ export const Pokedex = () => {
         <Thead>
           <Tr>
             <Th>Pokemon</Th>
+            <Th>Sprite</Th>
+            <Th>Info</Th>
             <Th>Tipo</Th>
-            <Th>Dibujo</Th>
           </Tr>
         </Thead>
         <Tbody>
           {pokemons.map((pokemon) => (
             <Tr key={pokemon.name}>
               <Td>{pokemon.name}</Td>
-              <Td><Badge>{pokemon.types[0].type.name}</Badge></Td>
               <Td>
                 <Image boxSize='100px' src={pokemon.sprites.front_default} />
-                <Button colorScheme='teal' variant='outline'>
-                  <Link to={`${pokemon.name}`}>Detalles</Link>
-                  </Button>
               </Td>
+              <Td>
+                <Button size='md' colorScheme='telegram' variant='solid'>
+                  <Link to={`${pokemon.name}`}>INFO</Link>
+                </Button>
+  
+              </Td>
+              <Td><Badge>{pokemon.types[0].type.name}</Badge>
+              <Badge>{pokemon.types[1]?.type.name}</Badge></Td>
+              {/* {pokemons.types?.map((pokemon) => (
+                <Td><Badge>{pokemon.types[0].type.name}</Badge></Td>
+              ))} */}
             </Tr>
           ))}
         </Tbody>
