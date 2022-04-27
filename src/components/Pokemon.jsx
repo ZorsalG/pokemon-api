@@ -1,60 +1,54 @@
-import { useState } from "react";
-import { getPokemons, getPokemonData } from "../services/Api";
-import { useEffect } from "react";
-import {
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableContainer, Image, Th, Thead, Badge
-} from '@chakra-ui/react'
+import { Table, TableContainer, Tbody, Tr, Td, Thead, Th } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export const Pokemon = () => {
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemon, setPokemon] = useState([]);
+
+  const { name } = useParams();
 
 
-  const fetchPokemons = async () => {
-    try {
-      const data = await getPokemons();
-      const promises = data.results.map(async (pokemon) => {
-        return await getPokemonData(pokemon.url);
-      });
-      const results = await Promise.all(promises);
-      setPokemons(results);
-    } catch (err) {
-      console.log(err)
-    }
-  };
-  useEffect(() => {
-    fetchPokemons();
-
+  const fetchPokemon = () => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setPokemon(data)
+      })
   }
-  )
-  //console.log(pokemons);
+
+  useEffect(() => {
+    fetchPokemon();
+  }, [])
+  
+  console.log(pokemon)
   return (
     <TableContainer>
       <Table size='sm' colorScheme='black'>
         <Thead>
           <Tr>
-            <Th>Pokemon</Th>
-            <Th>Type</Th>
-            <Th>Sprite</Th>
+            <Th>Name</Th>
+            {pokemon?.stats?.map(stat => (
+              <Th key={stat.stat.name}>{stat.stat.name}</Th>
+            ))}
+            <Th>Height</Th>
+            <Th>Base Experience</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {pokemons.map((pokemon) => (
-            <Tr key={pokemon.name}>
-              <Td>{pokemon.name}</Td>
-              <Td><Badge>{pokemon.types[0].type.name}</Badge></Td>
-              <Td>
-                <Image boxSize='100px' src={pokemon.sprites.front_default} />
-              </Td>
-            </Tr>
-          ))}
+          <Tr>
+            <Td>{pokemon.name}</Td>
+            {pokemon?.stats?.map(stat => (
+              <Th key={stat.stat.name}>{stat.base_stat}</Th>
+            ))}
+            <Td>{pokemon.height}</Td>
+            <Td>{pokemon.base_experience}</Td>
+          </Tr>
+          <Tr>
+          </Tr>
         </Tbody>
       </Table>
     </TableContainer>
   )
 }
-
-export default Pokemon;
