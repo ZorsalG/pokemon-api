@@ -5,7 +5,7 @@ import {
   Tbody,
   Tr,
   Td,
-  TableContainer, Thead, Th, Badge, Image, Button
+  TableContainer, Thead, Th, Image, Button, Badge
 } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
 
@@ -25,13 +25,13 @@ export const Pokedex = () => {
       console.log(err)
     }
   };
+
   useEffect(() => {
     fetchPokemons();
 
-  }, []
-  )
-  console.log(pokemons)
-  {/* EXTRAR EN CONCRETO dentro del key {{pokemon}} {} DESTRUCTURING */ }
+  }, [])
+
+  /* EXTRAR EN CONCRETO dentro del key {{pokemon}} {} DESTRUCTURING */ 
 
   return (
     <TableContainer>
@@ -41,13 +41,12 @@ export const Pokedex = () => {
             <Th>Pokemon</Th>
             <Th>Sprite</Th>
             <Th>Info</Th>
-            <Th>Tipo</Th>
           </Tr>
         </Thead>
         <Tbody>
           {pokemons.map((pokemon) => (
             <Tr key={pokemon.name}>
-              <Td>{pokemon.name}</Td>
+              <Td><Badge>{pokemon.name}</Badge></Td>
               <Td>
                 <Image boxSize='100px' src={pokemon.sprites.front_default} />
               </Td>
@@ -55,13 +54,7 @@ export const Pokedex = () => {
                 <Button size='md' colorScheme='telegram' variant='solid'>
                   <Link to={`${pokemon.name}`}>INFO</Link>
                 </Button>
-  
               </Td>
-              <Td><Badge>{pokemon.types[0].type.name}</Badge>
-              <Badge>{pokemon.types[1]?.type.name}</Badge></Td>
-              {/* {pokemons.types?.map((pokemon) => (
-                <Td><Badge>{pokemon.types[0].type.name}</Badge></Td>
-              ))} */}
             </Tr>
           ))}
         </Tbody>

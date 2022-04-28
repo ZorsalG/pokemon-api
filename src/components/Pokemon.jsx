@@ -1,5 +1,5 @@
-import { Table, TableContainer, Tbody, Tr, Td, Thead, Th, Button } from "@chakra-ui/react";
-import { useParams, Link } from "react-router-dom";
+import { Table, TableContainer, Tbody, Tr, Td, Thead, Th, Badge } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export const Pokemon = () => {
@@ -7,24 +7,26 @@ export const Pokemon = () => {
 
   const { name } = useParams();
 
-
   const fetchPokemon = () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
       .then(res => {
         return res.json();
       })
+      .catch((error) => {
+        console.log(error)
+      })
       .then(data => {
         setPokemon(data)
       })
   }
-
   useEffect(() => {
     fetchPokemon();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(pokemon)
   return (
-    <TableContainer>
+    <TableContainer >
       <Table size='sm' colorScheme='black'>
         <Thead>
           <Tr>
@@ -34,22 +36,21 @@ export const Pokemon = () => {
             ))}
             <Th>Height</Th>
             <Th>Base Experience</Th>
-            <Th>Back</Th>
+            <Th>Type 1</Th>
+            <Th>Type 2</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            <Td>{pokemon.name}</Td>
+            <Td><Badge>{pokemon.name}</Badge></Td>
             {pokemon.stats?.map(stat => (
-              <Th key={stat.stat.name}>{stat.base_stat}</Th>
+              <Td key={stat.stat.name}>{stat.base_stat}</Td>
             ))}
             <Td>{pokemon.height}</Td>
             <Td>{pokemon.base_experience}</Td>
-            <Td>
-              <Button size='sm' colorScheme='telegram' variant='solid'>
-                <Link to='/pokedex'>BACK</Link>
-              </Button>
-            </Td>
+            {pokemon.types?.map(pokemon => (
+              <Td key={pokemon.type.name}><Badge>{pokemon.type.name}</Badge></Td>
+            ))}
           </Tr>
         </Tbody>
       </Table>
