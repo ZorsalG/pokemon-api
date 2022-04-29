@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { getPokemons, getPokemonsData } from "../services/Api";
 import {
-  Image, Box, Heading, Grid, IconButton, GridItem, SimpleGrid
+  Image, Box, Heading, IconButton, SimpleGrid
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 
 export const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
@@ -55,6 +55,7 @@ export const Pokedex = () => {
   return (
     <SimpleGrid minChildWidth={250} spacingX={8} spacingY={6} p={3} >
       {pokemons.map((pokemon) => (
+        <motion.div whileHover={{ scale: 1.04 }}>
           <Box
             bg={changeBackground(pokemon)}
             rounded={'lg'}
@@ -68,9 +69,9 @@ export const Pokedex = () => {
               </Heading>
             </Box>
             <Box>
-              <Image
-                src={pokemon.sprites.other["official-artwork"].front_default}
-              />
+                <Image
+                  src={pokemon.sprites.other["official-artwork"].front_default}
+                />
             </Box>
             <Box align={'center'}>
               <Box align={'center'} >
@@ -85,7 +86,9 @@ export const Pokedex = () => {
               </Box>
             </Box>
           </Box>
+        </motion.div>
       ))}
+
     </SimpleGrid>
   );
 };
