@@ -5,7 +5,6 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
-
   const { name } = useParams();
 
   const fetchPokemon = () => {
@@ -20,9 +19,9 @@ export const Pokemon = () => {
         setPokemon(data)
       })
   }
+
   useEffect(() => {
     fetchPokemon();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -57,7 +56,6 @@ export const Pokemon = () => {
             height={300}
             width={300}
             src={pokemon?.sprites?.other["official-artwork"].front_default}
-
           />
         </Box>
         <Box align={'center'}>
@@ -88,5 +86,5 @@ export const Pokemon = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
