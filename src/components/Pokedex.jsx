@@ -46,11 +46,8 @@ export const Pokedex = () => {
     } if (pokemon.types[0].type.name.includes('ground')) {
       return 'linear-gradient(180deg, rgba(176,53,31,1) 0%, rgba(115,37,18,1) 100%)';
     }
-    return '#000000'
+    return '#000000';
   }
-
-  console.log(pokemons)
-  /* EXTRAR EN CONCRETO dentro del key {{pokemon}} {} DESTRUCTURING */
 
   return (
     <SimpleGrid minChildWidth={250} spacingX={8} spacingY={6} p={3} >
@@ -88,7 +85,6 @@ export const Pokedex = () => {
           </Box>
         </motion.div>
       ))}
-
     </SimpleGrid>
   );
 };

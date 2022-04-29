@@ -45,9 +45,7 @@ export const Pokemon = () => {
     }
     return '#000000';
   }
-
-  console.log(pokemon)
-
+  
   return (
     <Box color={'white'} align={'center'} width={500} p={5} justifyContent={'center'}>
       <Box rounded={'lg'} bg={'gray.700'} minH={775}>
