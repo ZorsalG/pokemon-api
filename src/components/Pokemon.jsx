@@ -2,6 +2,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Box, Image, Heading, Badge, Text, IconButton } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
+import { motion } from "framer-motion";
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
@@ -45,39 +46,42 @@ export const Pokemon = () => {
     }
     return '#000000';
   }
-  
+
   return (
-    <Box color={'white'} align={'center'} width={500} p={5} justifyContent={'center'}>
-      <Box rounded={'lg'} bg={'gray.700'} minH={775}>
-        <Box align={'center'} pt={5}>
-          <Image
-            height={300}
-            width={300}
-            src={pokemon?.sprites?.other["official-artwork"].front_default}
-          />
+    <Box color={'white'} align={'center'} p={5} display={'flex'} alignItems={'center'}>
+      <Box rounded={'lg'} bg={'gray.700'}>
+        <Box>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Image
+              src={pokemon?.sprites?.other["official-artwork"].front_default}
+            />
+          </motion.div>
         </Box>
-        <Box align={'center'}>
+        <Box>
           <Heading fontSize={'3xl'} fontWeight={500}>
             {'ID #' + pokemon.id}
           </Heading>
-          <Heading fontSize={'3xl'} fontWeight={500} align={'center'}>
+          <Heading fontSize={'3xl'} fontWeight={500}>
             {pokemon.name}
           </Heading>
         </Box>
-        <Box align={'center'}>
+        <Box>
           {pokemon.types?.map(pokemon => (
             <Badge m={5} bg={backgroundType(pokemon)} rounded={'lg'} color={'white'} key={pokemon.type.name}><Heading>{pokemon.type.name}</Heading></Badge>
           ))}
         </Box>
-        <Box align={'center'}>
+        <Box>
           <Heading>
             Stats
           </Heading>
           {pokemon?.stats?.map(stat => (
-            <Badge m={5} colorScheme={'purple'} fontSize='1.1em' rounded={'lg'} key={stat.stat.name}><Text >{stat.stat.name + ' ' + stat.base_stat}</Text></Badge>
+            <Badge m={5} colorScheme={'purple'} fontSize='1.1em' rounded={'lg'} key={stat.stat.name} display={'flex'}><Text>{stat.stat.name + ' ' + stat.base_stat}</Text></Badge>
           ))}
         </Box>
-        <Box>
+        <Box mb={4}>
           <NavLink to={'/pokedex'} >
             <IconButton icon={<ArrowLeftIcon />} variant={'solid'} colorScheme={'whiteAlpha'} />
           </NavLink>
