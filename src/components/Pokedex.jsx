@@ -16,8 +16,8 @@ export const Pokedex = () => {
       });
       const results = await Promise.all(promises);
       setPokemons(results);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -25,6 +25,7 @@ export const Pokedex = () => {
     fetchPokemons();
   }, []);
 
+  console.log(pokemons);
   const changeBackground = pokemon => {
     if (pokemon.types[0].type.name.includes('grass')) {
       return 'linear-gradient(180deg, rgba(34,195,40,1) 0%, rgba(20,124,24,1) 100%)';

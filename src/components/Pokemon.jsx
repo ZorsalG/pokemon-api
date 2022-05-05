@@ -3,21 +3,20 @@ import { useState, useEffect } from 'react';
 import { Box, Image, Heading, Badge, Text, IconButton } from '@chakra-ui/react';
 import { ArrowLeftIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
   const { name } = useParams();
 
   const fetchPokemon = () => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then(res => {
-        return res.json();
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .then(response => {
+        setPokemon(response.data);
       })
       .catch(error => {
         console.log(error);
-      })
-      .then(data => {
-        setPokemon(data);
       });
   };
 
