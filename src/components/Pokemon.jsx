@@ -1,12 +1,32 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Box, Image, Heading, Badge, Text, IconButton } from '@chakra-ui/react';
-import { ArrowLeftIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Image,
+  Heading,
+  Badge,
+  Text,
+  IconButton,
+  Button,
+} from '@chakra-ui/react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
+import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react';
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
+  //const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { name } = useParams();
 
   const fetchPokemon = () => {
@@ -52,6 +72,20 @@ export const Pokemon = () => {
     }
     return '#000000';
   };
+
+  //const randomNumber = Math.floor(Math.random() * 100);
+  // axios
+  //   .get(`https://pokeapi.co/api/v2/type/${randomNumber}`)
+  //   .then(response => {
+  //     console.log(response.data);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+
+  // TODO: MODAL QUE AL HACER CLICK, MUESTRE 3 POKEMONS DEL MISMO TIPO        1. EXTRAER EL TIPO DEL ACTUAL POKEMON.                                      2. DICHO TIPO LLEVARLO A LA APIS DE TIPOS.                                   3. DEVOLVER SOLO 1 ALEATORIO CON MATH RANDOM.                                4. PINTAR LA IMAGEN DE DICHO POKEMON
+
+  // ? UTIL: https://pokeapi.co/api/v2/type/{id or name}/
 
   return (
     <Box
@@ -112,6 +146,29 @@ export const Pokemon = () => {
               variant={'solid'}
               colorScheme={'whiteAlpha'}
             />
+          </NavLink>
+          <NavLink to={''}>
+            <IconButton
+              icon={<ArrowRightIcon />}
+              variant={'solid'}
+              colorScheme={'whiteAlpha'}
+              onClick={onOpen}
+            />
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Tipos</ModalHeader>
+                <ModalCloseButton />
+
+                <ModalBody></ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={onClose}>
+                    Cerrar
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </NavLink>
         </Box>
       </Box>

@@ -25,7 +25,6 @@ export const Pokedex = () => {
     fetchPokemons();
   }, []);
 
-  console.log(pokemons);
   const changeBackground = pokemon => {
     if (pokemon.types[0].type.name.includes('grass')) {
       return 'linear-gradient(180deg, rgba(34,195,40,1) 0%, rgba(20,124,24,1) 100%)';
@@ -57,13 +56,12 @@ export const Pokedex = () => {
   return (
     <SimpleGrid minChildWidth={250} spacingX={8} spacingY={6} p={3}>
       {pokemons.map(pokemon => (
-        <motion.div whileHover={{ scale: 1.04 }}>
+        <motion.div whileHover={{ scale: 1.04 }} key={pokemon.name}>
           <Box
             bg={changeBackground(pokemon)}
             rounded={'lg'}
             w={'100%'}
             h={'100%'}
-            key={pokemon.name}
           >
             <Box>
               <Heading fontSize={'4xl'} color={'white'} align={'center'} pt={3}>
