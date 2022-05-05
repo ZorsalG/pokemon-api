@@ -2,8 +2,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import '@fontsource/open-sans/700.css'
-import theme from './theme'
+import '@fontsource/open-sans/700.css';
+import theme from './theme';
 
 ReactDOM.render(
   <BrowserRouter>
