@@ -16,7 +16,7 @@ export const getPokemons = async () => {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -34,6 +34,6 @@ export const getPokemonsData = async url => {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

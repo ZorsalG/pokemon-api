@@ -8,6 +8,8 @@ import {
   Text,
   IconButton,
   Button,
+  Stack,
+  Checkbox,
 } from '@chakra-ui/react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
@@ -25,19 +27,17 @@ import {
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
-  //const [isOpen, setIsOpen] = useState(false);
+  const [typePokemon, setTypePokemon] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { name } = useParams();
 
   const fetchPokemon = () => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then(response => {
-        setPokemon(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(response => {
+      setPokemon(response.data);
+    });
+    // .catch(error => {
+    //   console.log(error);
+    // });
   };
 
   useEffect(() => {
@@ -73,18 +73,24 @@ export const Pokemon = () => {
     return '#000000';
   };
 
-  //const randomNumber = Math.floor(Math.random() * 100);
-  // axios
-  //   .get(`https://pokeapi.co/api/v2/type/${randomNumber}`)
-  //   .then(response => {
-  //     console.log(response.data);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
+  const fetchType = type => {
+    axios
+      //.get(`https://pokeapi.co/api/v2/type/${type}`)
+      .get(`https://pokeapi.co/api/v2/type/grass`)
+      .then(response => {
+        setTypePokemon(response.data);
+      });
+    // .catch(error => {
+    //   console.log(error);
+    // });
+  };
 
-  // TODO: MODAL QUE AL HACER CLICK, MUESTRE 3 POKEMONS DEL MISMO TIPO        1. EXTRAER EL TIPO DEL ACTUAL POKEMON.                                      2. DICHO TIPO LLEVARLO A LA APIS DE TIPOS.                                   3. DEVOLVER SOLO 1 ALEATORIO CON MATH RANDOM.                                4. PINTAR LA IMAGEN DE DICHO POKEMON
+  const num = 3; //Math.floor(Math.random() * 100);
+  // TODO: MODAL QUE AL HACER CLICK, MUESTRE 3 POKEMONS DEL MISMO TIPO                                                                          3. DEVOLVER SOLO 1 ALEATORIO CON MATH RANDOM.                                4. PINTAR LA IMAGEN DE DICHO POKEMON
 
+  // TODO: TRAER SOLO UN TIPO DEL ARRAY
+
+  // * BUSCAR PORQUE ONCLICK, SIN HACER CLICK, REDENRIZA
   // ? UTIL: https://pokeapi.co/api/v2/type/{id or name}/
 
   return (
@@ -160,7 +166,21 @@ export const Pokemon = () => {
                 <ModalHeader>Tipos</ModalHeader>
                 <ModalCloseButton />
 
-                <ModalBody></ModalBody>
+                <ModalBody>
+                  {pokemon.types?.map(pokemon => (
+                    <Stack spacing={5} onClick={() => console.log('funciona')}>
+                        <Checkbox
+                          size="md"
+                          colorScheme="orange"
+                        >
+                          {pokemon.type.name}
+                        </Checkbox>
+                    </Stack>
+                  ))}
+                  {typePokemon.pokemon?.map(pokemon => (
+                    <p>{pokemon.pokemon.name}</p>
+                  ))}
+                </ModalBody>
 
                 <ModalFooter>
                   <Button colorScheme="blue" mr={3} onClick={onClose}>
