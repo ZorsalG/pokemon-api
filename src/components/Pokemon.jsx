@@ -11,7 +11,7 @@ import {
   Stack,
   Checkbox,
 } from '@chakra-ui/react';
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { ArrowLeftIcon, SearchIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
@@ -28,16 +28,30 @@ import {
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
   const [typePokemon, setTypePokemon] = useState([]);
+  const [checked, setChecked] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { name } = useParams();
 
   const fetchPokemon = () => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(response => {
-      setPokemon(response.data);
-    });
-    // .catch(error => {
-    //   console.log(error);
-    // });
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .then(response => {
+        setPokemon(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const fetchType = type => {
+    axios
+      .get(`https://pokeapi.co/api/v2/type/${type}`)
+      .then(response => {
+        setTypePokemon(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -73,24 +87,33 @@ export const Pokemon = () => {
     return '#000000';
   };
 
-  const fetchType = type => {
-    axios
-      //.get(`https://pokeapi.co/api/v2/type/${type}`)
-      .get(`https://pokeapi.co/api/v2/type/grass`)
-      .then(response => {
-        setTypePokemon(response.data);
-      });
-    // .catch(error => {
-    //   console.log(error);
-    // });
-  };
+  let elementToRender = null;
 
-  const num = 3; //Math.floor(Math.random() * 100);
-  // TODO: MODAL QUE AL HACER CLICK, MUESTRE 3 POKEMONS DEL MISMO TIPO                                                                          3. DEVOLVER SOLO 1 ALEATORIO CON MATH RANDOM.                                4. PINTAR LA IMAGEN DE DICHO POKEMON
+  if (typePokemon.length === 0) {
+    elementToRender = 'Selecciona un tipo de pokemon';
+  } else {
+    elementToRender = typePokemon.pokemon?.map(pokemon => (
+      <div key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</div>
+    ));
+  }
 
-  // TODO: TRAER SOLO UN TIPO DEL ARRAY
+  function toggleValue(type) {
+    setChecked(oldValue => {
+      const newValue = !oldValue;
+      if (newValue) {
+        fetchType(type);
+      } else {
+        setTypePokemon([]);
+      }
+      return newValue;
+    });
+  }
 
-  // * BUSCAR PORQUE ONCLICK, SIN HACER CLICK, REDENRIZA
+  // TODO: MODAL A OTRO COMPONENTE
+  // TODO: CHECKBOX POR CADA TIPO
+  // TODO: TOGGLEVALUE INDEPENDIENTES
+  // TODO: FILTRO DE AMBOS TIPOS DE POKEMON
+
   // ? UTIL: https://pokeapi.co/api/v2/type/{id or name}/
 
   return (
@@ -125,6 +148,7 @@ export const Pokemon = () => {
               rounded={'lg'}
               color={'white'}
               key={pokemon.type.name}
+              value={pokemon.type.name}
             >
               <Heading>{pokemon.type.name}</Heading>
             </Badge>
@@ -155,7 +179,7 @@ export const Pokemon = () => {
           </NavLink>
           <NavLink to={''}>
             <IconButton
-              icon={<ArrowRightIcon />}
+              icon={<SearchIcon />}
               variant={'solid'}
               colorScheme={'whiteAlpha'}
               onClick={onOpen}
@@ -167,19 +191,20 @@ export const Pokemon = () => {
                 <ModalCloseButton />
 
                 <ModalBody>
-                  {pokemon.types?.map(pokemon => (
-                    <Stack spacing={5} onClick={() => console.log('funciona')}>
-                        <Checkbox
-                          size="md"
-                          colorScheme="orange"
-                        >
-                          {pokemon.type.name}
-                        </Checkbox>
-                    </Stack>
-                  ))}
-                  {typePokemon.pokemon?.map(pokemon => (
-                    <p>{pokemon.pokemon.name}</p>
-                  ))}
+                  <Stack spacing={5}>
+                    {pokemon.types?.map(pokemon => (
+                      <Checkbox
+                        size="md"
+                        colorScheme="orange"
+                        key={pokemon.type.name}
+                        checked={checked}
+                        onChange={() => toggleValue(pokemon.type.name)}
+                      >
+                        {pokemon.type.name}
+                      </Checkbox>
+                    ))}
+                  </Stack>
+                  {elementToRender}
                 </ModalBody>
 
                 <ModalFooter>
