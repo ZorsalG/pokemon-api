@@ -1,34 +1,15 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {
-  Box,
-  Image,
-  Heading,
-  Badge,
-  Text,
-  IconButton,
-  Button,
-  Stack,
-  Checkbox,
-} from '@chakra-ui/react';
+import { Box, Image, Heading, Badge, Text, IconButton } from '@chakra-ui/react';
 import { ArrowLeftIcon, SearchIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react';
+import { ModalPokemon } from './ModalPokemon';
 
 export const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
-  const [typePokemon, setTypePokemon] = useState([]);
-  const [checked, setChecked] = useState(false);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { name } = useParams();
 
@@ -37,17 +18,6 @@ export const Pokemon = () => {
       .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
       .then(response => {
         setPokemon(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const fetchType = type => {
-    axios
-      .get(`https://pokeapi.co/api/v2/type/${type}`)
-      .then(response => {
-        setTypePokemon(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -86,28 +56,6 @@ export const Pokemon = () => {
     }
     return '#000000';
   };
-
-  let elementToRender = null;
-
-  if (typePokemon.length === 0) {
-    elementToRender = 'Selecciona un tipo de pokemon';
-  } else {
-    elementToRender = typePokemon.pokemon?.map(pokemon => (
-      <div key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</div>
-    ));
-  }
-
-  function toggleValue(type) {
-    setChecked(oldValue => {
-      const newValue = !oldValue;
-      if (newValue) {
-        fetchType(type);
-      } else {
-        setTypePokemon([]);
-      }
-      return newValue;
-    });
-  }
 
   // TODO: MODAL A OTRO COMPONENTE
   // TODO: CHECKBOX POR CADA TIPO
@@ -184,36 +132,7 @@ export const Pokemon = () => {
               colorScheme={'whiteAlpha'}
               onClick={onOpen}
             />
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Tipos</ModalHeader>
-                <ModalCloseButton />
-
-                <ModalBody>
-                  <Stack spacing={5}>
-                    {pokemon.types?.map(pokemon => (
-                      <Checkbox
-                        size="md"
-                        colorScheme="orange"
-                        key={pokemon.type.name}
-                        checked={checked}
-                        onChange={() => toggleValue(pokemon.type.name)}
-                      >
-                        {pokemon.type.name}
-                      </Checkbox>
-                    ))}
-                  </Stack>
-                  {elementToRender}
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onClose}>
-                    Cerrar
-                  </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+            <ModalPokemon isOpen={isOpen} onClose={onClose} pokemon={pokemon}/>
           </NavLink>
         </Box>
       </Box>
