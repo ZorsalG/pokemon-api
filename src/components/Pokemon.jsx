@@ -1,9 +1,16 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Box, Image, Heading, Badge, Text, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Image,
+  Heading,
+  Badge,
+  Text,
+  IconButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { ArrowLeftIcon, SearchIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
-import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { ModalPokemon } from './ModalPokemon';
 import { backgroundPokemon } from './styles';
@@ -82,7 +89,6 @@ export function Pokemon() {
           {pokemon?.stats?.map(stat => (
             <Badge
               m={5}
-              colorScheme={'purple'}
               fontSize="1.1em"
               rounded={'lg'}
               key={stat.stat.name}
