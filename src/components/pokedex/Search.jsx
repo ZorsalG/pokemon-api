@@ -15,6 +15,7 @@ export function Search(props) {
   const onClick = async e => {
     onSearch(search);
   };
+
   return (
     <Flex>
       <Box>

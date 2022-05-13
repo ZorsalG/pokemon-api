@@ -14,9 +14,10 @@ export default function Navbar() {
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
+        fontFamily={'heading'}
       >
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text fontFamily={'heading'}>PokeAPI</Text>
+          <Text>PokeAPI</Text>
         </Flex>
         <Flex>
           <Box mr={3}>

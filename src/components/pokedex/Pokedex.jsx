@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getPokemons, getPokemonsData, searchPokemon } from '../../services/Api';
+import {
+  getPokemons,
+  getPokemonsData,
+  searchPokemon,
+} from '../../services/Api';
 import {
   Image,
   Box,
