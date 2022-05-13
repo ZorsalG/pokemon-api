@@ -13,7 +13,7 @@ import { ArrowLeftIcon, SearchIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { ModalPokemon } from './ModalPokemon';
-import { backgroundPokemon } from './styles';
+import { backgroundPokemon } from '../styles';
 
 export function Pokemon() {
   const [pokemon, setPokemon] = useState([]);
