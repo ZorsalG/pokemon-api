@@ -44,7 +44,7 @@ export const backgroundPokedex = pokemon => {
 };
 
 export const backgroundPokemon = pokemon => {
-  switch (pokemon.type.name) {
+  switch (pokemon.types[0].type.name) {
     case 'grass':
       return 'linear-gradient(180deg, rgba(34,195,40,1) 0%, rgba(20,124,24,1) 100%)';
     case 'fire':

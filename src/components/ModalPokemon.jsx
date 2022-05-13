@@ -10,6 +10,7 @@ import {
   Button,
   Stack,
   Checkbox,
+  Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import axios from 'axios';
@@ -64,20 +65,15 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
         console.log(error);
       });
   };
-
   let elementToRender = null;
 
   if (firstChecked) {
     elementToRender = firstTypePokemon.pokemon?.map(pokemon => (
-      <div key={pokemon?.pokemon.name}>
-          {pokemon?.pokemon.name}
-      </div>
+      <Text key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</Text>
     ));
   } else {
     elementToRender = secondTypePokemon.pokemon?.map(pokemon => (
-      <div key={pokemon?.pokemon.name}>
-          {pokemon?.pokemon.name}
-      </div>
+      <Text key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</Text>
     ));
   }
 
@@ -93,9 +89,7 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
     sameTypePokemon = firstMap?.filter(pokemon => secondMap?.includes(pokemon));
 
     elementToRender = sameTypePokemon?.map(pokemon => (
-      <div key={pokemon}>
-          <p>{pokemon}</p>
-      </div>
+      <div key={pokemon}>{pokemon}</div>
     ));
   }
 
@@ -103,7 +97,7 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Tipos</ModalHeader>
+        <ModalHeader>Types</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -112,23 +106,21 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
               <Box>
                 <Checkbox
                   size="md"
-                  colorScheme="orange"
                   key={pokemon.types[0].type.name}
                   isChecked={firstChecked}
                   onChange={() => toggleValueFirst(pokemon.types[0].type.name)}
+                  mr={5}
                 >
                   {pokemon.types[0].type.name}
                 </Checkbox>
                 {pokemon?.types[1] && (
                   <Checkbox
                     size="md"
-                    colorScheme="orange"
                     key={pokemon.types[1].type.name}
                     checked={secondChecked}
                     onChange={() =>
                       toggleValueSecond(pokemon.types[1].type.name)
                     }
-                    ml={2}
                   >
                     {pokemon.types[1].type.name}
                   </Checkbox>
@@ -136,12 +128,12 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
               </Box>
             )}
           </Stack>
-          {elementToRender}
+          <Box>{elementToRender}</Box>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Cerrar
+          <Button colorScheme="blue" onClick={onClose}>
+            Close
           </Button>
         </ModalFooter>
       </ModalContent>

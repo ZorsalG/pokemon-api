@@ -45,69 +45,74 @@ export function Pokemon() {
       display={'flex'}
       alignItems={'center'}
     >
-      <Box rounded={'lg'} bg={'gray.700'}>
-        <Box>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-            <Image
-              src={pokemon?.sprites?.other['official-artwork'].front_default}
-            />
-          </motion.div>
+      {pokemon?.types && (
+        <Box rounded={'lg'} bg={backgroundPokemon(pokemon)}>
+          <Box>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
+              <Image
+                src={pokemon?.sprites?.other['official-artwork'].front_default}
+              />
+            </motion.div>
+          </Box>
+          <Box>
+            <Heading fontSize={'3xl'} fontWeight={500}>
+              {'ID #' + pokemon.id}
+            </Heading>
+            <Heading fontSize={'3xl'} fontWeight={500}>
+              {pokemon.name}
+            </Heading>
+          </Box>
+          <Box>
+            {pokemon.types?.map(pokemon => (
+              <Badge
+                m={3}
+                bg={'none'}
+                color={'white'}
+                key={pokemon.type.name}
+                value={pokemon.type.name}
+              >
+                <Heading>{pokemon.type.name}</Heading>
+              </Badge>
+            ))}
+            <NavLink to={''}>
+              <IconButton
+                icon={<SearchIcon />}
+                variant={'solid'}
+                colorScheme={'whiteAlpha'}
+                onClick={onOpen}
+              />
+              <ModalPokemon
+                isOpen={isOpen}
+                onClose={onClose}
+                pokemon={pokemon}
+              />
+            </NavLink>
+          </Box>
+          <Box>
+            <Heading>Stats</Heading>
+            {pokemon?.stats?.map(stat => (
+              <Badge
+                m={5}
+                fontSize="1.1em"
+                rounded={'lg'}
+                key={stat.stat.name}
+                display={'flex'}
+              >
+                <Text>{stat.stat.name + ' ' + stat.base_stat}</Text>
+              </Badge>
+            ))}
+          </Box>
+          <Box mb={4}>
+            <NavLink to={'/pokedex'}>
+              <IconButton
+                icon={<ArrowLeftIcon />}
+                variant={'solid'}
+                colorScheme={'whiteAlpha'}
+              />
+            </NavLink>
+          </Box>
         </Box>
-        <Box>
-          <Heading fontSize={'3xl'} fontWeight={500}>
-            {'ID #' + pokemon.id}
-          </Heading>
-          <Heading fontSize={'3xl'} fontWeight={500}>
-            {pokemon.name}
-          </Heading>
-        </Box>
-        <Box>
-          {pokemon.types?.map(pokemon => (
-            <Badge
-              m={5}
-              bg={backgroundPokemon(pokemon)}
-              rounded={'lg'}
-              color={'white'}
-              key={pokemon.type.name}
-              value={pokemon.type.name}
-            >
-              <Heading>{pokemon.type.name}</Heading>
-            </Badge>
-          ))}
-          <NavLink to={''}>
-            <IconButton
-              icon={<SearchIcon />}
-              variant={'solid'}
-              colorScheme={'whiteAlpha'}
-              onClick={onOpen}
-            />
-            <ModalPokemon isOpen={isOpen} onClose={onClose} pokemon={pokemon} />
-          </NavLink>
-        </Box>
-        <Box>
-          <Heading>Stats</Heading>
-          {pokemon?.stats?.map(stat => (
-            <Badge
-              m={5}
-              fontSize="1.1em"
-              rounded={'lg'}
-              key={stat.stat.name}
-              display={'flex'}
-            >
-              <Text>{stat.stat.name + ' ' + stat.base_stat}</Text>
-            </Badge>
-          ))}
-        </Box>
-        <Box mb={4}>
-          <NavLink to={'/pokedex'}>
-            <IconButton
-              icon={<ArrowLeftIcon />}
-              variant={'solid'}
-              colorScheme={'whiteAlpha'}
-            />
-          </NavLink>
-        </Box>
-      </Box>
+      )}
     </Box>
   );
 }
