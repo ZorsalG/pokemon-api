@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const getPokemons = async () => {
   // TODO: TRANFORMAR FETCH EN AXIOS
   // axios
