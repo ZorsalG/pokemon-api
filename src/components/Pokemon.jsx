@@ -6,8 +6,9 @@ import { motion } from 'framer-motion';
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { ModalPokemon } from './ModalPokemon';
+import { backgroundPokemon } from './styles';
 
-export const Pokemon = () => {
+export function Pokemon() {
   const [pokemon, setPokemon] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,41 +29,6 @@ export const Pokemon = () => {
     fetchPokemon();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const backgroundType = pokemon => {
-    if (pokemon.type.name.includes('grass')) {
-      return '#20bf00';
-    }
-    if (pokemon.type.name.includes('fire')) {
-      return '#bf0000';
-    }
-    if (pokemon.type.name.includes('water')) {
-      return '#49abbb';
-    }
-    if (pokemon.type.name.includes('normal')) {
-      return '#626262';
-    }
-    if (pokemon.type.name.includes('electric')) {
-      return '#b9bf00';
-    }
-    if (pokemon.type.name.includes('poison')) {
-      return '#bf0085';
-    }
-    if (pokemon.type.name.includes('bug')) {
-      return '#00bf46';
-    }
-    if (pokemon.type.name.includes('ground')) {
-      return '#915a19';
-    }
-    return '#000000';
-  };
-
-  // TODO: MODAL A OTRO COMPONENTE
-  // TODO: CHECKBOX POR CADA TIPO
-  // TODO: TOGGLEVALUE INDEPENDIENTES
-  // TODO: FILTRO DE AMBOS TIPOS DE POKEMON
-
-  // ? UTIL: https://pokeapi.co/api/v2/type/{id or name}/
 
   return (
     <Box
@@ -92,7 +58,7 @@ export const Pokemon = () => {
           {pokemon.types?.map(pokemon => (
             <Badge
               m={5}
-              bg={backgroundType(pokemon)}
+              bg={backgroundPokemon(pokemon)}
               rounded={'lg'}
               color={'white'}
               key={pokemon.type.name}
@@ -101,6 +67,15 @@ export const Pokemon = () => {
               <Heading>{pokemon.type.name}</Heading>
             </Badge>
           ))}
+          <NavLink to={''}>
+            <IconButton
+              icon={<SearchIcon />}
+              variant={'solid'}
+              colorScheme={'whiteAlpha'}
+              onClick={onOpen}
+            />
+            <ModalPokemon isOpen={isOpen} onClose={onClose} pokemon={pokemon} />
+          </NavLink>
         </Box>
         <Box>
           <Heading>Stats</Heading>
@@ -125,17 +100,8 @@ export const Pokemon = () => {
               colorScheme={'whiteAlpha'}
             />
           </NavLink>
-          <NavLink to={''}>
-            <IconButton
-              icon={<SearchIcon />}
-              variant={'solid'}
-              colorScheme={'whiteAlpha'}
-              onClick={onOpen}
-            />
-            <ModalPokemon isOpen={isOpen} onClose={onClose} pokemon={pokemon}/>
-          </NavLink>
         </Box>
       </Box>
     </Box>
   );
-};
+}

@@ -7,22 +7,15 @@ import {
   ModalBody,
   ModalCloseButton,
   Box,
-  Table,
   Button,
   Stack,
   Checkbox,
-  Tbody,
-  Tr,
-  Td,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export const ModalPokemon = props => {
-  const pokemon = props.pokemon;
-  const isOpen = props.isOpen;
-  const onClose = props.onClose;
-
+export function ModalPokemon({ pokemon, isOpen, onClose }) {
   const [secondTypePokemon, setSecondTypePokemon] = useState([]);
   const [firstTypePokemon, setFirstTypePokemon] = useState([]);
   const [firstChecked, setFirstChecked] = useState(false);
@@ -77,11 +70,19 @@ export const ModalPokemon = props => {
 
   if (firstChecked) {
     elementToRender = firstTypePokemon.pokemon?.map(pokemon => (
-      <div key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</div>
+      <div key={pokemon?.pokemon.name}>
+        <Link to={`/pokedex/${pokemon?.pokemon.name}`}>
+          {pokemon?.pokemon.name}
+        </Link>
+      </div>
     ));
   } else {
     elementToRender = secondTypePokemon.pokemon?.map(pokemon => (
-      <div key={pokemon?.pokemon.name}>{pokemon?.pokemon.name}</div>
+      <div key={pokemon?.pokemon.name}>
+        <Link to={`/pokedex/${pokemon?.pokemon.name}`}>
+          {pokemon?.pokemon.name}
+        </Link>
+      </div>
     ));
   }
 
@@ -98,7 +99,9 @@ export const ModalPokemon = props => {
 
     elementToRender = sameTypePokemon?.map(pokemon => (
       <div key={pokemon}>
-        <p>{pokemon}</p>
+        <Link to={`/pokedex/${pokemon}`}>
+          <p>{pokemon}</p>
+        </Link>
       </div>
     ));
   }
@@ -118,7 +121,7 @@ export const ModalPokemon = props => {
                   size="md"
                   colorScheme="orange"
                   key={pokemon.types[0].type.name}
-                  checked={firstChecked}
+                  isChecked={firstChecked}
                   onChange={() => toggleValueFirst(pokemon.types[0].type.name)}
                 >
                   {pokemon.types[0].type.name}
@@ -151,4 +154,4 @@ export const ModalPokemon = props => {
       </ModalContent>
     </Modal>
   );
-};
+}
