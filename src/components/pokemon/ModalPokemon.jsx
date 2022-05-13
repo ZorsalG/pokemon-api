@@ -97,7 +97,7 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Types</ModalHeader>
+        <ModalHeader>Filtro de tipos</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -133,7 +133,7 @@ export function ModalPokemon({ pokemon, isOpen, onClose }) {
 
         <ModalFooter>
           <Button colorScheme="blue" onClick={onClose}>
-            Close
+            Cerrar
           </Button>
         </ModalFooter>
       </ModalContent>
