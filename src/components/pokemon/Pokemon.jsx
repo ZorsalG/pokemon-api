@@ -43,6 +43,7 @@ export function Pokemon() {
       align={'center'}
       p={5}
       display={'flex'}
+      justifyContent={'center'}
       alignItems={'center'}
     >
       {pokemon?.types && (
@@ -59,7 +60,7 @@ export function Pokemon() {
               {'ID #' + pokemon.id}
             </Heading>
             <Heading fontSize={'3xl'} fontWeight={500}>
-              {pokemon.name}
+              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
             </Heading>
           </Box>
           <Box>

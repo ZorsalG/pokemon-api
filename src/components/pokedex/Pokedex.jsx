@@ -85,7 +85,12 @@ export function Pokedex() {
       </Flex>
       <SimpleGrid minChildWidth={250} spacingX={8} spacingY={6} p={3}>
         {pokemons.map(pokemon => (
-          <Box bg={backgroundPokedex(pokemon)} rounded={'lg'} maxW={300}>
+          <Box
+            bg={backgroundPokedex(pokemon)}
+            rounded={'lg'}
+            maxW={300}
+            key={pokemon.name}
+          >
             <Box>
               <Heading fontSize={'4xl'} color={'white'} align={'center'} pt={3}>
                 {'#' + pokemon.id}
@@ -101,7 +106,7 @@ export function Pokedex() {
             <Box align={'center'}>
               <Box align={'center'}>
                 <Heading fontSize={'2xl'} fontWeight={500} color={'white'}>
-                  {pokemon.name}
+                  {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                 </Heading>
               </Box>
               <Box align={'center'} p={3}>
